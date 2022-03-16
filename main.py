@@ -20,7 +20,7 @@ AC C0 01 10 7D
 AC C0 01 D2 BF
 4. dock board usb off/on
 CELL_DOF\r\n(문자 전송) (edited)  43 45 4C 4C 5F 44 4F 46 5C 72 5C 6E
-3:35
+
 dfu 관련 명령어 입니다.
 """
 
@@ -707,7 +707,7 @@ def main():
     """Test program for verifying this files functionality."""
 
     # dfu_file_path = filedialog.askopenfilename()
-    dfu_file_path = "/Users/jaeuklee/Downloads/X4-fifa-v1.1.dfu"
+    dfu_file_path = "/Users/jaeuklee/Downloads/v1.2.dfu"
 
     while True:
 
@@ -734,7 +734,7 @@ def main():
             DOCK_CELL_ON_COMMAND = (DOCK_CELL_empty_ON_COMMAND % hex_val_string[2:])
             hub_to_cell_command = bytes.fromhex(DOCK_CELL_ON_COMMAND)
             hub_com_port_open.write(hub_to_cell_command)
-            time.sleep(5)
+            time.sleep(10)
 
             print("====== Read cell infomation ======")
             cell_com_port = get_cell_com_port(1155)
@@ -755,6 +755,7 @@ def main():
             print(production_number)
             print(firm_ver)
             time.sleep(5)
+
             print("====== Enter to cell dfu mode ======")
             hex_buf1 = bytes.fromhex(CELL_ENTER_DFU)
             cell_com_port_open.write(hex_buf1)
@@ -794,52 +795,6 @@ def main():
 
             time.sleep(3)
             cell_cnt += 1
-
-        # command_run = False
-        # if args.mass_erase:
-        #     print("Mass erase...")
-        #     mass_erase()
-        #     command_run = True
-        #
-        # if args.path:
-        #     elements, vector_table_size = read_dfu_file(args.path)
-        #     print("***", vector_table_size)
-        #     if not elements:
-        #         print("No data in dfu file")
-        #         return
-        #     print("Writing memory...")
-        #     # print("elements = ", elements[0]['data'].type)
-        #
-        #     _empty_offset = elements[1]['addr'] - elements[0]['addr']
-        #     print("!!!", _empty_offset)
-        #     empty_offset = _empty_offset - vector_table_size
-        #     ff_offset_add_val = make_ff_by_counter(empty_offset)
-        #
-        #     elements[0]['data'] += ff_offset_add_val
-        #
-        #     print("___", elements[0]['data'])
-        #
-        #     print("empty_offset = ", empty_offset)
-        #     print(type(elements[0]['addr']))
-        #     total_element = {'addr':elements[0]['addr'], 'size':elements[0]['size']+elements[1]['size'],
-        #                                      'num':elements[0]['num'], 'data':elements[0]['data'] + elements[1]['data']}
-        #
-        #     print("total_element", total_element['addr'], type(total_element['addr']), total_element['size'])
-        #     write_elements(total_element, args.mass_erase, progress=cli_progress)
-        #
-        #     print("Exiting DFU...")
-        #     exit_dfu()
-        #     command_run = True
-        #
-        # if args.exit:
-        #     print("Exiting DFU...")
-        #     exit_dfu()
-        #     command_run = True
-        #
-        # if command_run:
-        #     print("Finished")
-        # else:
-        #     print("No command specified")
 
 
 if __name__ == "__main__":
